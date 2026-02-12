@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Nuestro Mundo 💖</title>
+<style>
+body{
+margin:0;
+overflow:hidden;
+font-family:'Segoe UI', cursive;
+background:linear-gradient(270deg,#ff9a9e,#fad0c4,#fad0c4,#ff9a9e);
+background-size:800% 800%;
+animation:bg 15s ease infinite;
+color:white;
+text-align:center;
+}
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+.box{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(255,255,255,0.15);
+padding:40px;
+border-radius:25px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 40px rgba(0,0,0,0.3);
+width:350px;
+}
+input{
+padding:12px;
+border:none;
+border-radius:15px;
+text-align:center;
+font-size:16px;
+margin-top:15px;
+}
+button{
+padding:12px 25px;
+border:none;
+border-radius:30px;
+margin:10px;
+font-size:17px;
+cursor:pointer;
+transition:.3s;
+}
+.yes{background:#00e676;color:white;}
+.no{background:#ff1744;color:white;position:absolute;}
+.hidden{display:none;}
+.heart{
+position:absolute;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+@keyframes float{
+0%{transform:translateY(100vh) scale(0);}
+100%{transform:translateY(-10vh) scale(1.5);}
+}
+</style>
+</head>
+<body>
+
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3">
+</audio>
+
+<div class="box" id="login">
+<h2>💖 Bienvenida Amor 💖</h2>
+<p>La clave está en nuestro día mágico ✨</p>
+<input type="password" id="pass" placeholder="Ingresa la clave">
+<br>
+<button onclick="checkPass()">Entrar</button>
+</div>
+
+<div class="box hidden" id="contenido">
+<h2 id="texto"></h2>
+<div id="mensajes" class="hidden">
+<p>Eres mi casualidad favorita 💘</p>
+<p>Mi lugar seguro siempre serás tú 🥰</p>
+<p>Tu sonrisa es mi debilidad 😍</p>
+<p>Si la vida es sueño… quiero soñarte siempre ❤️</p>
+
+<h3>¿Quieres ser mi San Valentín? 💌</h3>
+<button class="yes" onclick="acepto()">Sí 💖</button>
+<button class="no" id="no">No 💔</button>
+</div>
+</div>
+
+<div class="box hidden" id="final">
+<h2>🥹 Sabía que dirías que sí</h2>
+<p>Prometo cuidarte, amarte y hacerte sonreír todos los días 💞</p>
+<p>Eres mi persona favorita en todo el universo 🌎❤️</p>
+</div>
+
+<script>
+function checkPass(){
+let p=document.getElementById("pass").value;
+if(p==="031225"){
+document.getElementById("login").classList.add("hidden");
+document.getElementById("contenido").classList.remove("hidden");
+escribirTexto("Desbloqueando mensajes secretos...");
+setTimeout(()=>document.getElementById("mensajes").classList.remove("hidden"),2500);
+}else{
+alert("Clave incorrecta amorcito 😢");
+}
+}
+function escribirTexto(text){
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("texto").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,50);
+}}
+type();
+}
+const noBtn=document.getElementById("no");
+noBtn.addEventListener("mouseover",()=>{
+const x=Math.random()*window.innerWidth*0.8;
+const y=Math.random()*window.innerHeight*0.8;
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+});
+function acepto(){
+document.getElementById("contenido").classList.add("hidden");
+document.getElementById("final").classList.remove("hidden");
+}
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.style.left=Math.random()*100+"vw";
+heart.innerHTML="💖";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},300);
+</script>
+
+</body>
+</html>
