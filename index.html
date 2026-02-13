@@ -25,6 +25,7 @@ background:rgba(0,0,0,.55);
 z-index:-1;
 }
 
+/* cajas */
 .box{
 position:absolute;
 top:50%;
@@ -38,13 +39,15 @@ width:440px;
 backdrop-filter:blur(6px);
 }
 
+/* titulo */
 .titulo{
 font-family:'Great Vibes',cursive;
 font-size:52px;
 color:#ffc2ec;
-text-shadow:0 0 20px #ff66cc;
+text-shadow:0 0 25px #ff66cc;
 }
 
+/* botones */
 button{
 padding:13px 30px;
 border:none;
@@ -52,6 +55,11 @@ border-radius:30px;
 margin:12px;
 font-size:18px;
 cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.08);
 }
 
 .yes{
@@ -68,13 +76,13 @@ position:absolute;
 
 .hidden{display:none}
 
-/* mensajes alrededor */
+/* mensajes */
 .msg{
 position:absolute;
 font-family:'Great Vibes',cursive;
-font-size:26px;
+font-size:28px;
 color:#ffd6f2;
-text-shadow:0 0 10px black;
+text-shadow:0 0 12px black;
 opacity:0;
 animation:aparecer 1.5s forwards;
 }
@@ -82,6 +90,20 @@ animation:aparecer 1.5s forwards;
 @keyframes aparecer{
 from{transform:scale(.5);opacity:0}
 to{transform:scale(1);opacity:1}
+}
+
+/* corazon */
+#corazon{
+font-size:110px;
+animation:latido 1s infinite;
+}
+
+@keyframes latido{
+0%{transform:scale(1)}
+25%{transform:scale(1.2)}
+40%{transform:scale(1)}
+60%{transform:scale(1.2)}
+100%{transform:scale(1)}
 }
 
 /* carta */
@@ -105,13 +127,26 @@ from{opacity:0}
 to{opacity:1}
 }
 
+/* rosas */
+.rosa{
+position:fixed;
+top:-50px;
+font-size:30px;
+animation:caer linear forwards;
+pointer-events:none;
+}
+@keyframes caer{
+to{transform:translateY(110vh) rotate(360deg);opacity:0}
+}
+
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div class="box" id="login">
-<h2>Bienvenida Cielo 💖</h2>
+<h2>Bienvenida</h2>
+<div>Cielo 💖</div>
 <p>La clave está en nuestro día mágico</p>
 <input type="password" id="pass">
 <br><br>
@@ -123,9 +158,12 @@ to{opacity:1}
 <div class="titulo">MI MUNDO ERES TÚ</div>
 </div>
 
+<!-- CORAZON -->
+<div class="hidden" id="corazon">❤️</div>
+
 <!-- PREGUNTA -->
 <div class="box hidden" id="pregunta">
-<h1 style="font-family:'Great Vibes',cursive;font-size:50px;color:#ffd1f0">
+<h1 style="font-family:'Great Vibes';font-size:50px;color:#ffd1f0">
 ¿Quieres ser mi San Valentín?
 </h1>
 <button class="yes" onclick="acepto()">Sí 💖</button>
@@ -166,14 +204,8 @@ const mensajes=[
 ];
 
 const posiciones=[
-["10%","20%"],
-["80%","15%"],
-["15%","70%"],
-["75%","75%"],
-["5%","45%"],
-["90%","50%"],
-["35%","10%"],
-["60%","85%"]
+["10%","20%"],["80%","15%"],["15%","70%"],["75%","75%"],
+["5%","45%"],["90%","50%"],["35%","10%"],["60%","85%"]
 ];
 
 function checkPass(){
@@ -195,11 +227,17 @@ m.style.left=posiciones[i][0];
 m.style.top=posiciones[i][1];
 document.body.appendChild(m);
 i++;
-setTimeout(aparecer,1200);
+setTimeout(aparecer,1400);
 }else{
 setTimeout(()=>{
 tituloBox.classList.add("hidden");
+document.getElementById("corazon").classList.remove("hidden");
+
+setTimeout(()=>{
+document.getElementById("corazon").classList.add("hidden");
 pregunta.classList.remove("hidden");
+},3000);
+
 },2000);
 }}
 aparecer();
@@ -213,15 +251,27 @@ no.style.top=Math.random()*200+"px";
 function acepto(){
 pregunta.classList.add("hidden");
 respuesta.classList.remove("hidden");
+lluviaRosas();
 }
 
 function mostrarCarta(){
+document.querySelectorAll(".msg").forEach(e=>e.remove());
 respuesta.classList.add("hidden");
 carta.classList.remove("hidden");
 }
 
-</script>
+function lluviaRosas(){
+setInterval(()=>{
+const rosa=document.createElement("div");
+rosa.classList.add("rosa");
+rosa.innerHTML="🌹";
+rosa.style.left=Math.random()*100+"vw";
+rosa.style.animationDuration=(3+Math.random()*5)+"s";
+document.body.appendChild(rosa);
+setTimeout(()=>rosa.remove(),8000);
+},300);
+}
 
+</script>
 </body>
 </html>
-
