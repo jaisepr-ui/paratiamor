@@ -296,6 +296,9 @@ cont.style.position="fixed";
 cont.style.inset="0";
 cont.style.background="rgba(0,0,0,.93)";
 cont.style.zIndex="9999";
+cont.style.display="flex";
+cont.style.alignItems="center";
+cont.style.justifyContent="center";
 document.body.appendChild(cont);
 
 let i=0;
@@ -306,15 +309,23 @@ if(i<fotos.length){
 
 const img=document.createElement("img");
 img.src=fotos[i];
+
+img.style.width="220px"; /* tamaño pequeño */
+img.style.height="260px";
+img.style.objectFit="cover";
+
+img.style.borderRadius="18px";
+img.style.boxShadow="0 0 40px hotpink";
+img.style.border="3px solid #ffd6f2";
+
 img.style.position="absolute";
-img.style.width="450px";
-img.style.maxWidth="85vw";
-img.style.borderRadius="25px";
-img.style.boxShadow="0 0 70px hotpink";
-img.style.left=Math.random()*60+20+"%";
-img.style.top=Math.random()*60+20+"%";
+
+/* posición aleatoria PERO centrada */
+img.style.left=40+Math.random()*20+"%";
+img.style.top=40+Math.random()*20+"%";
+
 img.style.opacity="0";
-img.style.transform="scale(.6)";
+img.style.transform="scale(.7)";
 img.style.transition="all 1s ease";
 
 cont.appendChild(img);
@@ -326,12 +337,12 @@ img.style.transform="scale(1)";
 
 setTimeout(()=>{
 img.style.opacity="0";
-img.style.transform="scale(.5)";
-setTimeout(()=>img.remove(),1000);
+img.style.transform="scale(.6)";
+setTimeout(()=>img.remove(),900);
 },2000);
 
 i++;
-setTimeout(flash,900);
+setTimeout(flash,1000);
 
 }else{
 
@@ -342,7 +353,7 @@ texto.style.top="50%";
 texto.style.left="50%";
 texto.style.transform="translate(-50%,-50%)";
 texto.style.fontFamily="Great Vibes";
-texto.style.fontSize="95px";
+texto.style.fontSize="85px";
 texto.style.color="#ffd6f2";
 texto.style.textShadow="0 0 70px hotpink";
 cont.appendChild(texto);
@@ -356,7 +367,6 @@ lluviaRosas();
 }
 flash();
 }
-
 /* rosas */
 function lluviaRosas(){
 setInterval(()=>{
