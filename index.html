@@ -57,10 +57,7 @@ font-size:18px;
 cursor:pointer;
 transition:.3s;
 }
-
-button:hover{
-transform:scale(1.08);
-}
+button:hover{ transform:scale(1.08); }
 
 .yes{
 background:linear-gradient(45deg,#ff4da6,#ff9de2);
@@ -86,36 +83,38 @@ text-shadow:0 0 12px black;
 opacity:0;
 animation:aparecer 1.5s forwards;
 }
-
 @keyframes aparecer{
 from{transform:scale(.5);opacity:0}
 to{transform:scale(1);opacity:1}
 }
 
+/* corazon */
+.corazon{
+position:fixed;
+top:-20px;
+font-size:24px;
+animation:caer linear forwards;
+pointer-events:none;
+}
+@keyframes caer{
+to{transform:translateY(110vh);opacity:0}
+}
+
 /* corazon central */
 #corazonGrande{
-font-size:110px;
+font-size:120px;
 animation:latido 1s infinite;
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 }
-
 @keyframes latido{
 0%{transform:translate(-50%,-50%) scale(1)}
 25%{transform:translate(-50%,-50%) scale(1.2)}
-40%{transform:translate(-50%,-50%) scale(1)}
-60%{transform:translate(-50%,-50%) scale(1.2)}
+50%{transform:translate(-50%,-50%) scale(1)}
+75%{transform:translate(-50%,-50%) scale(1.2)}
 100%{transform:translate(-50%,-50%) scale(1)}
-}
-
-/* romantico */
-.romantico{
-font-family:'Great Vibes',cursive;
-font-size:60px;
-color:#ffd6f2;
-text-shadow:0 0 20px #ff66cc;
 }
 
 /* carta */
@@ -138,7 +137,6 @@ font-size:28px;
 line-height:1.6;
 animation:entradaCarta 2s ease;
 }
-
 @keyframes entradaCarta{
 0%{opacity:0;transform:translate(-50%,-40%) scale(.8);}
 100%{opacity:1;transform:translate(-50%,-50%) scale(1);}
@@ -153,27 +151,14 @@ animation:caer linear forwards;
 pointer-events:none;
 }
 
-@keyframes caer{
-to{transform:translateY(110vh) rotate(360deg);opacity:0}
-}
-
-/* corazones */
-.corazon{
-position:fixed;
-top:-50px;
-font-size:25px;
-animation:caer linear forwards;
-pointer-events:none;
-}
-
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div class="box" id="login">
-<div class="romantico">Bienvenida</div>
-<div class="romantico">Cielo 💖</div>
+<h2 style="font-family:Great Vibes;font-size:55px;color:#ffd6f2">Bienvenida</h2>
+<div style="font-family:Great Vibes;font-size:55px;color:#ffd6f2">Cielo 💖</div>
 <p>La clave está en nuestro día mágico</p>
 <input type="password" id="pass">
 <br><br>
@@ -182,11 +167,10 @@ pointer-events:none;
 
 <!-- TITULO -->
 <div class="box hidden" id="tituloBox">
-<div class="titulo">Mi Cielo 💘</div>
+<div class="titulo">Mi Cielo 💗</div>
 </div>
 
-<!-- CORAZON CENTRAL -->
-<div class="hidden" id="corazonGrande">❤️</div>
+<div id="corazonGrande" class="hidden">❤️</div>
 
 <!-- PREGUNTA -->
 <div class="box hidden" id="pregunta">
@@ -199,7 +183,7 @@ pointer-events:none;
 
 <!-- RESPUESTA -->
 <div class="box hidden" id="respuesta">
-<h1 class="titulo">Sabía que dirías que sí 💍</h1>
+<h1 class="titulo">Sabía que aceptarías 💍</h1>
 <p>Eres mi destino favorito ✨</p>
 <p>Mi felicidad siempre tendrá tu nombre 💖</p>
 <button onclick="mostrarCarta()">Para ti amor 💌</button>
@@ -209,15 +193,22 @@ pointer-events:none;
 <div class="carta hidden" id="carta">
 Amor, sabes que te quiero y te amo con toda mi alma.  
 Sé que nuestro primer San Valentín no lo pasaremos juntos físicamente, pero nuestros corazones laten sincronizadamente en estos momentos.  
-
 Siempre estás presente en mis pensamientos; tu sonrisa, sinceramente, es mi debilidad, y quiero verte siempre sonriendo y siendo feliz.  
-
-Te lo vuelvo a decir: eres la mujer que mi corazón eligió, y sé que juntos vamos a construir cosas maravillosas. Viviremos nuestro mundo y seremos felices por siempre, lo sé y lo siento.  
-
+Te lo vuelvo a decir: eres la mujer que mi corazón eligió, y sé que juntos vamos a construir cosas maravillosas. Viviremos nuestro mundo y seremos felices por siempre.  
 Porque te amo con pasión, mi cielo ❤️
 </div>
 
 <script>
+
+const fotos=[
+"foto1.jpg",
+"foto2.jpg",
+"foto3.jpg",
+"foto4.jpg",
+"foto5.jpg",
+"foto6.jpg",
+"foto7.jpg"
+];
 
 const mensajes=[
 "Eres mi casualidad favorita 💕",
@@ -235,11 +226,26 @@ const posiciones=[
 ["5%","45%"],["90%","50%"],["35%","10%"],["60%","85%"]
 ];
 
+/* lluvia corazones inicio */
+window.lluviaCorazonesInterval=setInterval(()=>{
+const c=document.createElement("div");
+c.className="corazon";
+c.innerHTML="💖";
+c.style.left=Math.random()*100+"vw";
+c.style.animationDuration=(3+Math.random()*5)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),8000);
+},300);
+
+function detenerCorazones(){
+clearInterval(window.lluviaCorazonesInterval);
+document.querySelectorAll(".corazon").forEach(e=>e.remove());
+}
+
 function checkPass(){
 if(pass.value==="031225"){
 login.classList.add("hidden");
 tituloBox.classList.remove("hidden");
-lluviaCorazones();
 mostrarMensajes();
 }else alert("Clave incorrecta 😢");
 }
@@ -278,36 +284,65 @@ no.style.top=Math.random()*200+"px";
 
 function acepto(){
 pregunta.classList.add("hidden");
-respuesta.classList.remove("hidden");
 detenerCorazones();
+mostrarFlashRomantico();
+}
+
+/* FLASH DE FOTOS */
+function mostrarFlashRomantico(){
+
+const cont=document.createElement("div");
+cont.style.position="fixed";
+cont.style.inset="0";
+cont.style.background="rgba(0,0,0,.85)";
+cont.style.zIndex="9999";
+document.body.appendChild(cont);
+
+let i=0;
+
+function flash(){
+
+if(i<fotos.length){
+
+const img=document.createElement("img");
+img.src=fotos[i];
+img.style.position="absolute";
+img.style.maxWidth="320px";
+img.style.borderRadius="20px";
+img.style.boxShadow="0 0 40px hotpink";
+img.style.left=Math.random()*70+10+"%";
+img.style.top=Math.random()*70+10+"%";
+img.style.opacity="0";
+img.style.transition="1s";
+cont.appendChild(img);
+
+setTimeout(()=>img.style.opacity="1",100);
+setTimeout(()=>{img.style.opacity="0";setTimeout(()=>img.remove(),1000)},1500);
+
+i++;
+setTimeout(flash,600);
+
+}else{
+
+const texto=document.createElement("div");
+texto.innerHTML="ERES HERMOSA 💖";
+texto.style.fontFamily="Great Vibes";
+texto.style.fontSize="90px";
+texto.style.color="#ffd6f2";
+texto.style.textShadow="0 0 40px hotpink";
+cont.appendChild(texto);
+
+setTimeout(()=>{
+cont.remove();
+respuesta.classList.remove("hidden");
 lluviaRosas();
+},3000);
+}
+}
+flash();
 }
 
-function mostrarCarta(){
-document.querySelectorAll(".msg").forEach(e=>e.remove());
-respuesta.classList.add("hidden");
-carta.classList.remove("hidden");
-}
-
-/* corazones inicio */
-function lluviaCorazones(){
-window.intervalCorazones=setInterval(()=>{
-const c=document.createElement("div");
-c.className="corazon";
-c.innerHTML="💖";
-c.style.left=Math.random()*100+"vw";
-c.style.animationDuration=(3+Math.random()*5)+"s";
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),8000);
-},300);
-}
-
-function detenerCorazones(){
-clearInterval(window.intervalCorazones);
-document.querySelectorAll(".corazon").forEach(e=>e.remove());
-}
-
-/* rosas despues del si */
+/* rosas finales */
 function lluviaRosas(){
 setInterval(()=>{
 const rosa=document.createElement("div");
@@ -318,6 +353,11 @@ rosa.style.animationDuration=(3+Math.random()*5)+"s";
 document.body.appendChild(rosa);
 setTimeout(()=>rosa.remove(),8000);
 },300);
+}
+
+function mostrarCarta(){
+respuesta.classList.add("hidden");
+carta.classList.remove("hidden");
 }
 
 </script>
