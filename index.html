@@ -2,29 +2,23 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Para ti mi princesa 💖</title>
+<title>Mi Mundo Eres Tú 💖</title>
 
 <style>
 body{
 margin:0;
 overflow:hidden;
 font-family:'Segoe UI', cursive;
-background:radial-gradient(circle at top,#1a0026,#000000 80%);
+background:linear-gradient(-45deg,#2b0033,#000000,#33001b,#000000);
+background-size:400% 400%;
+animation:bg 18s ease infinite;
 color:white;
 text-align:center;
 }
-
-
-.star{
-position:absolute;
-width:2px;
-height:2px;
-background:white;
-animation:twinkle 2s infinite alternate;
-}
-@keyframes twinkle{
-from{opacity:.2}
-to{opacity:1}
+@keyframes bg{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
 }
 
 .box{
@@ -34,26 +28,18 @@ left:50%;
 transform:translate(-50%,-50%);
 background:rgba(0,0,0,0.75);
 padding:45px;
-border-radius:30px;
-box-shadow:0 0 60px #ff4da6;
-width:400px;
-animation:fadeIn 2s;
-}
-
-@keyframes fadeIn{
-from{opacity:0; transform:translate(-50%,-60%)}
-to{opacity:1; transform:translate(-50%,-50%)}
+border-radius:25px;
+box-shadow:0 0 60px rgba(255,0,128,.6);
+width:420px;
 }
 
 .cielo{
 font-size:42px;
-color:#ff77c6;
-text-shadow:0 0 25px #ff77c6;
+color:#ff7ac6;
+text-shadow:0 0 25px #ff7ac6;
 animation:pulse 2s infinite;
 }
-@keyframes pulse{
-50%{transform:scale(1.1)}
-}
+@keyframes pulse{50%{transform:scale(1.1)}}
 
 button{
 padding:13px 30px;
@@ -62,7 +48,6 @@ border-radius:30px;
 margin:12px;
 font-size:18px;
 cursor:pointer;
-transition:.3s;
 }
 
 .yes{
@@ -79,39 +64,47 @@ position:absolute;
 
 .hidden{display:none}
 
-/* lluvia corazones */
-.heart{
+/* mensajes flotantes */
+.msg{
 position:absolute;
-font-size:22px;
+font-size:20px;
+opacity:0;
+animation:fade 2s forwards;
+}
+@keyframes fade{to{opacity:1}}
+
+/* lluvia */
+.heart,.flower{
+position:absolute;
+pointer-events:none;
 animation:fall linear forwards;
 }
 @keyframes fall{
-to{transform:translateY(100vh); opacity:0;}
+to{transform:translateY(100vh);opacity:0}
 }
 
-/* flores */
-.flower{
+/* carta */
+.carta{
 position:absolute;
-font-size:26px;
-animation:float 6s linear forwards;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#fff0f5;
+color:#5a0033;
+padding:40px;
+border-radius:20px;
+width:420px;
+box-shadow:0 0 40px pink;
+font-family:serif;
+animation:aparecer 2s;
 }
-@keyframes float{
-from{transform:translateY(100vh)}
-to{transform:translateY(-10vh); opacity:0}
+@keyframes aparecer{
+from{opacity:0; transform:translate(-50%,-70%)}
+to{opacity:1; transform:translate(-50%,-50%)}
 }
 </style>
 </head>
 <body>
-
-<script>
-for(let i=0;i<120;i++){
-let s=document.createElement("div");
-s.className="star";
-s.style.top=Math.random()*100+"vh";
-s.style.left=Math.random()*100+"vw";
-document.body.appendChild(s);
-}
-</script>
 
 <audio autoplay loop>
 <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3">
@@ -119,81 +112,102 @@ document.body.appendChild(s);
 
 <!-- LOGIN -->
 <div class="box" id="login">
-<h2>✨ Bienvenida ✨</h2>
-<div class="cielo">mi amorcito 💖</div>
+<h2>Bienvenida</h2>
+<div class="cielo"> Mi Amorcito 💖</div>
 <p>La clave está en nuestro día mágico</p>
-<input type="password" id="pass" placeholder="Ingresa la clave">
-<br>
+<input type="password" id="pass">
+<br><br>
 <button onclick="checkPass()">Entrar</button>
 </div>
-  
-<div class="box hidden" id="mensajes"></div>
+
+<!-- TEXTO DESBLOQUEO -->
+<div class="box hidden" id="loading">
+<h2 id="loadText"></h2>
+</div>
 
 <!-- PREGUNTA -->
 <div class="box hidden" id="pregunta">
-<h2 style="font-size:28px;">Cielo… 💫</h2>
-<h1 style="color:#ff9de2;text-shadow:0 0 20px #ff4da6">
-¿Quieres ser mi San Valentín? 🌹
-</h1>
-<button class="yes" onclick="acepto()">Sí mi amor 💖</button>
+<h1 style="color:#ff9de2">¿Quieres ser mi San Valentín? 🌹</h1>
+<button class="yes" onclick="acepto()">Sí 💖</button>
 <button class="no" id="no">No 😢</button>
 </div>
 
+<!-- CARTA -->
+<div class="carta hidden" id="carta">
+<h2>Para ti mi amor 💌</h2>
+<p>
+Amor, sabes que te quiero y te amo con toda mi alma. Sé que nuestro primer San Valentín no lo pasaremos juntos físicamente, pero nuestros corazones laten sincronizadamente en estos momentos.
+Siempre estás presente en mis pensamientos; tu sonrisa, sinceramente, es mi debilidad, y quiero verte siempre sonriendo y siendo feliz. 
 
-<div class="box hidden" id="final">
-<h1 style="color:#ff9de2">Sabía que dirías que sí 💍</h1>
-<p>Eres el amor más hermoso que existe Cielo ✨</p>
-<p>Hoy confirmo que eres mi destino ❤️</p>
+Te lo vuelvo a decir, eres la mujer que mi corazón eligió y sé que juntos vamos a construir cosas maravillosas. Viviremos nuestro mundo y seremos felices por siempre, lo sé y lo siento.  
+
+Porque te amo con pasión, mi cielo ❤️
+</p>
 </div>
 
 <script>
-const textos=[
-"Eres lo más bonito que me ha pasado 💕",
-"Mi lugar favorito siempre será contigo 🌙",
-"Tu sonrisa ilumina mi mundo ✨",
-"No quiero una vida perfecta… solo una contigo 💖",
-"Desde que llegaste todo es más hermoso 🥰",
-"Si existieran mil universos… te elegiría en todos 💫"
+const mensajes=[
+"Eres lo mejor que me pasó 💕",
+"Tu sonrisa ilumina mi vida ✨",
+"Mi mundo es más bonito contigo 🌎",
+"Tu voz es mi melodía favorita 🎶",
+"Contigo todo tiene sentido 💫",
+"Siempre te elegiría a ti ❤️"
 ];
 
 function checkPass(){
 if(pass.value==="031225"){
 login.classList.add("hidden");
+loading.classList.remove("hidden");
+escribir();
+}else alert("Clave incorrecta 😢, vuelve aintentarlo amor :)");
+}
+
+function escribir(){
+let text="Desbloqueando mensajes secretos...";
+let i=0;
+let speed=80;
+function type(){
+if(i<text.length){
+loadText.innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,speed);
+}else{
+setTimeout(()=>{
+loading.classList.add("hidden");
 mostrarMensajes();
-}else alert("Clave incorrecta 😢");
+},2000);
+}}
+type();
 }
 
 function mostrarMensajes(){
-mensajes.classList.remove("hidden");
 let i=0;
-function next(){
-if(i<textos.length){
-let p=document.createElement("p");
-p.innerHTML=textos[i];
-p.style.opacity=0;
-p.style.transition="2s";
-mensajes.appendChild(p);
-setTimeout(()=>p.style.opacity=1,100);
+function spawn(){
+if(i<mensajes.length){
+let m=document.createElement("div");
+m.className="msg";
+m.innerHTML=mensajes[i];
+m.style.left=Math.random()*80+"vw";
+m.style.top=Math.random()*80+"vh";
+document.body.appendChild(m);
 i++;
-setTimeout(next,2200);
+setTimeout(spawn,1500);
 }else{
 setTimeout(()=>{
-mensajes.classList.add("hidden");
 pregunta.classList.remove("hidden");
-lluviaRomantica();
-},2500);
+lluvia();
+},2000);
 }}
-next();
+spawn();
 }
-
 
 no.addEventListener("mouseover",()=>{
 no.style.left=Math.random()*300+"px";
 no.style.top=Math.random()*200+"px";
 });
 
-
-function lluviaRomantica(){
+function lluvia(){
 setInterval(()=>{
 let h=document.createElement("div");
 h.className="heart";
@@ -202,13 +216,14 @@ h.style.left=Math.random()*100+"vw";
 h.style.animationDuration=(3+Math.random()*2)+"s";
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),5000);
-},200);
+},250);
 
 setInterval(()=>{
 let f=document.createElement("div");
 f.className="flower";
 f.innerHTML="🌸";
 f.style.left=Math.random()*100+"vw";
+f.style.animationDuration=(4+Math.random()*2)+"s";
 document.body.appendChild(f);
 setTimeout(()=>f.remove(),6000);
 },600);
@@ -216,7 +231,7 @@ setTimeout(()=>f.remove(),6000);
 
 function acepto(){
 pregunta.classList.add("hidden");
-final.classList.remove("hidden");
+carta.classList.remove("hidden");
 }
 </script>
 
