@@ -58,9 +58,7 @@ cursor:pointer;
 transition:.3s;
 }
 
-button:hover{
-transform:scale(1.08);
-}
+button:hover{ transform:scale(1.08); }
 
 .yes{
 background:linear-gradient(45deg,#ff4da6,#ff9de2);
@@ -92,12 +90,11 @@ from{transform:scale(.5);opacity:0}
 to{transform:scale(1);opacity:1}
 }
 
-/* corazon */
+/* corazon central */
 #corazon{
 font-size:110px;
 animation:latido 1s infinite;
 }
-
 @keyframes latido{
 0%{transform:scale(1)}
 25%{transform:scale(1.2)}
@@ -106,8 +103,7 @@ animation:latido 1s infinite;
 100%{transform:scale(1)}
 }
 
-/* carta */
-
+/* texto romantico */
 .romantico{
 font-family:'Great Vibes',cursive;
 font-size:60px;
@@ -116,6 +112,7 @@ text-shadow:0 0 20px #ff66cc;
 letter-spacing:2px;
 }
 
+/* carta */
 .carta{
 position:absolute;
 top:50%;
@@ -123,60 +120,37 @@ left:50%;
 transform:translate(-50%,-50%);
 width:500px;
 padding:60px;
-
 background:
 linear-gradient(rgba(255,240,246,.92),rgba(255,240,246,.92)),
 url("https://images.unsplash.com/photo-1520962918287-7448c2878f65?q=80&w=1200") center/cover;
-
 border-radius:25px;
 border:3px solid #ffc2ec;
-
 box-shadow:
 0 0 60px rgba(255,105,180,.7),
 inset 0 0 30px rgba(255,182,193,.5);
-
 color:#5a0033;
-
 font-family:'Great Vibes',cursive;
 font-size:28px;
 line-height:1.6;
-
 animation:entradaCarta 2s ease;
-
-backdrop-filter:blur(2px);
 }
 
-/* animacion entrada */
 @keyframes entradaCarta{
-0%{
-opacity:0;
-transform:translate(-50%,-40%) scale(.8);
-}
-100%{
-opacity:1;
-transform:translate(-50%,-50%) scale(1);
-}
+0%{opacity:0;transform:translate(-50%,-40%) scale(.8);}
+100%{opacity:1;transform:translate(-50%,-50%) scale(1);}
 }
 
-/* rosas decorativas */
-.carta::before,
-.carta::after{
+/* rosas esquinas carta */
+.carta::before,.carta::after{
 content:"🌹";
 position:absolute;
 font-size:40px;
 opacity:.7;
 }
+.carta::before{top:10px;left:15px;}
+.carta::after{bottom:10px;right:15px;}
 
-.carta::before{
-top:10px;
-left:15px;
-}
-
-.carta::after{
-bottom:10px;
-right:15px;
-}
-/* rosas */
+/* lluvia rosas */
 .rosa{
 position:fixed;
 top:-50px;
@@ -186,6 +160,19 @@ pointer-events:none;
 }
 @keyframes caer{
 to{transform:translateY(110vh) rotate(360deg);opacity:0}
+}
+
+/* lluvia corazones */
+.corazonLluvia{
+position:fixed;
+top:-40px;
+font-size:28px;
+animation:caerCorazon linear forwards;
+pointer-events:none;
+z-index:999;
+}
+@keyframes caerCorazon{
+to{transform:translateY(110vh) scale(1.2);opacity:0}
 }
 
 </style>
@@ -204,7 +191,7 @@ to{transform:translateY(110vh) rotate(360deg);opacity:0}
 
 <!-- TITULO -->
 <div class="box hidden" id="tituloBox">
-<div class="titulo">Mi Cielo &#129653</div>
+<div class="titulo">Mi Cielo 💗</div>
 </div>
 
 <!-- CORAZON -->
@@ -280,10 +267,10 @@ setTimeout(aparecer,1400);
 }else{
 setTimeout(()=>{
 tituloBox.classList.add("hidden");
-document.getElementById("corazon").classList.remove("hidden");
+corazon.classList.remove("hidden");
 
 setTimeout(()=>{
-document.getElementById("corazon").classList.add("hidden");
+corazon.classList.add("hidden");
 pregunta.classList.remove("hidden");
 },3000);
 
@@ -307,6 +294,7 @@ function mostrarCarta(){
 document.querySelectorAll(".msg").forEach(e=>e.remove());
 respuesta.classList.add("hidden");
 carta.classList.remove("hidden");
+lluviaCorazones();
 }
 
 function lluviaRosas(){
@@ -320,6 +308,21 @@ document.body.appendChild(rosa);
 setTimeout(()=>rosa.remove(),8000);
 },300);
 }
+
+function lluviaCorazones(){
+setInterval(()=>{
+const h=document.createElement("div");
+h.className="corazonLluvia";
+h.innerHTML="💖";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(4+Math.random()*4)+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),8000);
+},300);
+}
+
+/* corazones desde el inicio */
+lluviaCorazones();
 
 </script>
 </body>
