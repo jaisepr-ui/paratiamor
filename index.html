@@ -2,23 +2,28 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mi Mundo Eres Tú 💖</title>
+<title>Para Cielo 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300&display=swap" rel="stylesheet">
 
 <style>
+
 body{
 margin:0;
 overflow:hidden;
-font-family:'Segoe UI', cursive;
-background:linear-gradient(-45deg,#2b0033,#000000,#33001b,#000000);
-background-size:400% 400%;
-animation:bg 18s ease infinite;
+font-family:'Poppins',sans-serif;
+background:url("https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1920") no-repeat center center/cover;
 color:white;
 text-align:center;
 }
-@keyframes bg{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
+
+/* capa oscura para contraste */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+z-index:-1;
 }
 
 .box{
@@ -26,20 +31,20 @@ position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:rgba(0,0,0,0.75);
+background:rgba(0,0,0,.65);
 padding:45px;
 border-radius:25px;
-box-shadow:0 0 60px rgba(255,0,128,.6);
+box-shadow:0 0 60px rgba(255,0,120,.7);
 width:420px;
+backdrop-filter:blur(6px);
 }
 
 .cielo{
-font-size:42px;
-color:#ff7ac6;
-text-shadow:0 0 25px #ff7ac6;
-animation:pulse 2s infinite;
+font-family:'Great Vibes',cursive;
+font-size:48px;
+color:#ffb3e6;
+text-shadow:0 0 20px #ff66cc;
 }
-@keyframes pulse{50%{transform:scale(1.1)}}
 
 button{
 padding:13px 30px;
@@ -64,19 +69,21 @@ position:absolute;
 
 .hidden{display:none}
 
-/* mensajes flotantes */
+/* mensajes alrededor */
 .msg{
 position:absolute;
 font-size:20px;
-opacity:0;
+font-family:'Great Vibes',cursive;
+color:#ffd6f2;
+text-shadow:0 0 10px black;
 animation:fade 2s forwards;
+opacity:0;
 }
 @keyframes fade{to{opacity:1}}
 
-/* lluvia */
-.heart,.flower{
+/* lluvia corazones */
+.heart{
 position:absolute;
-pointer-events:none;
 animation:fall linear forwards;
 }
 @keyframes fall{
@@ -89,123 +96,110 @@ position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:#fff0f5;
+background:#fff0f6;
 color:#5a0033;
-padding:40px;
+padding:50px;
 border-radius:20px;
-width:420px;
+width:460px;
 box-shadow:0 0 40px pink;
-font-family:serif;
+font-family:'Great Vibes',cursive;
+font-size:26px;
 animation:aparecer 2s;
 }
 @keyframes aparecer{
 from{opacity:0; transform:translate(-50%,-70%)}
 to{opacity:1; transform:translate(-50%,-50%)}
 }
+
 </style>
 </head>
 <body>
 
-<audio autoplay loop>
-<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3">
-</audio>
-
 <!-- LOGIN -->
 <div class="box" id="login">
 <h2>Bienvenida</h2>
-<div class="cielo"> Mi Amorcito 💖</div>
+<div class="cielo">Cielo 💖</div>
 <p>La clave está en nuestro día mágico</p>
 <input type="password" id="pass">
 <br><br>
 <button onclick="checkPass()">Entrar</button>
 </div>
 
-<!-- TEXTO DESBLOQUEO -->
-<div class="box hidden" id="loading">
-<h2 id="loadText"></h2>
-</div>
-
 <!-- PREGUNTA -->
 <div class="box hidden" id="pregunta">
-<h1 style="color:#ff9de2">¿Quieres ser mi San Valentín? 🌹</h1>
+<h1 style="color:#ffc2ec;font-family:'Great Vibes',cursive;font-size:48px">
+¿Quieres ser mi San Valentín?
+</h1>
 <button class="yes" onclick="acepto()">Sí 💖</button>
 <button class="no" id="no">No 😢</button>
 </div>
 
+<!-- RESPUESTA BONITA -->
+<div class="box hidden" id="respuesta">
+<h1 style="font-family:'Great Vibes',cursive;color:#ffd1f0">
+Sabía que dirías que sí 💍
+</h1>
+<p>Eres mi destino favorito ✨</p>
+<p>Mi felicidad siempre tendrá tu nombre 💖</p>
+
+<button onclick="mostrarCarta()">Para ti amor 💌</button>
+</div>
+
 <!-- CARTA -->
 <div class="carta hidden" id="carta">
-<h2>Para ti mi amor 💌</h2>
-<p>
-Amor, sabes que te quiero y te amo con toda mi alma. Sé que nuestro primer San Valentín no lo pasaremos juntos físicamente, pero nuestros corazones laten sincronizadamente en estos momentos.
-Siempre estás presente en mis pensamientos; tu sonrisa, sinceramente, es mi debilidad, y quiero verte siempre sonriendo y siendo feliz. 
+Amor, sabes que te quiero y te amo con toda mi alma.  
+Sé que nuestro primer San Valentín no lo pasaremos juntos físicamente, pero nuestros corazones laten sincronizadamente en estos momentos.  
 
-Te lo vuelvo a decir, eres la mujer que mi corazón eligió y sé que juntos vamos a construir cosas maravillosas. Viviremos nuestro mundo y seremos felices por siempre, lo sé y lo siento.  
+Siempre estás presente en mis pensamientos; tu sonrisa, sinceramente, es mi debilidad, y quiero verte siempre sonriendo y siendo feliz.  
+
+Te lo vuelvo a decir: eres la mujer que mi corazón eligió, y sé que juntos vamos a construir cosas maravillosas. Viviremos nuestro mundo y seremos felices por siempre, lo sé y lo siento.  
 
 Porque te amo con pasión, mi cielo ❤️
-</p>
 </div>
 
 <script>
+
 const mensajes=[
-"Eres lo mejor que me pasó 💕",
-"Tu sonrisa ilumina mi vida ✨",
-"Mi mundo es más bonito contigo 🌎",
-"Tu voz es mi melodía favorita 🎶",
-"Contigo todo tiene sentido 💫",
-"Siempre te elegiría a ti ❤️"
+"Eres mi casualidad favorita 💕",
+"Tu sonrisa ilumina mi mundo ✨",
+"Siempre te elegiría a ti 💖",
+"Mi lugar favorito eres tú 🌙",
+"Eres mi sueño hecho realidad 💫",
+"Contigo todo es perfecto ❤️"
 ];
 
 function checkPass(){
 if(pass.value==="031225"){
 login.classList.add("hidden");
-loading.classList.remove("hidden");
-escribir();
-}else alert("Clave incorrecta 😢, vuelve aintentarlo amor :)");
+mostrarPregunta();
+}else alert("Clave incorrecta 😢");
 }
 
-function escribir(){
-let text="Desbloqueando mensajes secretos...";
-let i=0;
-let speed=80;
-function type(){
-if(i<text.length){
-loadText.innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,speed);
-}else{
-setTimeout(()=>{
-loading.classList.add("hidden");
-mostrarMensajes();
-},2000);
-}}
-type();
-}
+function mostrarPregunta(){
+pregunta.classList.remove("hidden");
 
-function mostrarMensajes(){
-let i=0;
-function spawn(){
-if(i<mensajes.length){
+mensajes.forEach(text=>{
 let m=document.createElement("div");
 m.className="msg";
-m.innerHTML=mensajes[i];
-m.style.left=Math.random()*80+"vw";
-m.style.top=Math.random()*80+"vh";
+m.innerHTML=text;
+m.style.left=Math.random()*90+"vw";
+m.style.top=Math.random()*90+"vh";
 document.body.appendChild(m);
-i++;
-setTimeout(spawn,1500);
-}else{
-setTimeout(()=>{
-pregunta.classList.remove("hidden");
-lluvia();
-},2000);
-}}
-spawn();
+});
 }
 
+/* boton no huye */
 no.addEventListener("mouseover",()=>{
 no.style.left=Math.random()*300+"px";
 no.style.top=Math.random()*200+"px";
 });
+
+/* aceptar */
+function acepto(){
+pregunta.classList.add("hidden");
+respuesta.classList.remove("hidden");
+lluvia();
+}
 
 function lluvia(){
 setInterval(()=>{
@@ -217,22 +211,13 @@ h.style.animationDuration=(3+Math.random()*2)+"s";
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),5000);
 },250);
-
-setInterval(()=>{
-let f=document.createElement("div");
-f.className="flower";
-f.innerHTML="🌸";
-f.style.left=Math.random()*100+"vw";
-f.style.animationDuration=(4+Math.random()*2)+"s";
-document.body.appendChild(f);
-setTimeout(()=>f.remove(),6000);
-},600);
 }
 
-function acepto(){
-pregunta.classList.add("hidden");
+function mostrarCarta(){
+respuesta.classList.add("hidden");
 carta.classList.remove("hidden");
 }
+
 </script>
 
 </body>
