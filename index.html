@@ -58,7 +58,9 @@ cursor:pointer;
 transition:.3s;
 }
 
-button:hover{ transform:scale(1.08); }
+button:hover{
+transform:scale(1.08);
+}
 
 .yes{
 background:linear-gradient(45deg,#ff4da6,#ff9de2);
@@ -91,25 +93,29 @@ to{transform:scale(1);opacity:1}
 }
 
 /* corazon central */
-#corazon{
+#corazonGrande{
 font-size:110px;
 animation:latido 1s infinite;
-}
-@keyframes latido{
-0%{transform:scale(1)}
-25%{transform:scale(1.2)}
-40%{transform:scale(1)}
-60%{transform:scale(1.2)}
-100%{transform:scale(1)}
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 }
 
-/* texto romantico */
+@keyframes latido{
+0%{transform:translate(-50%,-50%) scale(1)}
+25%{transform:translate(-50%,-50%) scale(1.2)}
+40%{transform:translate(-50%,-50%) scale(1)}
+60%{transform:translate(-50%,-50%) scale(1.2)}
+100%{transform:translate(-50%,-50%) scale(1)}
+}
+
+/* romantico */
 .romantico{
 font-family:'Great Vibes',cursive;
 font-size:60px;
 color:#ffd6f2;
 text-shadow:0 0 20px #ff66cc;
-letter-spacing:2px;
 }
 
 /* carta */
@@ -125,9 +131,7 @@ linear-gradient(rgba(255,240,246,.92),rgba(255,240,246,.92)),
 url("https://images.unsplash.com/photo-1520962918287-7448c2878f65?q=80&w=1200") center/cover;
 border-radius:25px;
 border:3px solid #ffc2ec;
-box-shadow:
-0 0 60px rgba(255,105,180,.7),
-inset 0 0 30px rgba(255,182,193,.5);
+box-shadow:0 0 60px rgba(255,105,180,.7), inset 0 0 30px rgba(255,182,193,.5);
 color:#5a0033;
 font-family:'Great Vibes',cursive;
 font-size:28px;
@@ -140,17 +144,7 @@ animation:entradaCarta 2s ease;
 100%{opacity:1;transform:translate(-50%,-50%) scale(1);}
 }
 
-/* rosas esquinas carta */
-.carta::before,.carta::after{
-content:"🌹";
-position:absolute;
-font-size:40px;
-opacity:.7;
-}
-.carta::before{top:10px;left:15px;}
-.carta::after{bottom:10px;right:15px;}
-
-/* lluvia rosas */
+/* rosas */
 .rosa{
 position:fixed;
 top:-50px;
@@ -158,21 +152,18 @@ font-size:30px;
 animation:caer linear forwards;
 pointer-events:none;
 }
+
 @keyframes caer{
 to{transform:translateY(110vh) rotate(360deg);opacity:0}
 }
 
-/* lluvia corazones */
-.corazonLluvia{
+/* corazones */
+.corazon{
 position:fixed;
-top:-40px;
-font-size:28px;
-animation:caerCorazon linear forwards;
+top:-50px;
+font-size:25px;
+animation:caer linear forwards;
 pointer-events:none;
-z-index:999;
-}
-@keyframes caerCorazon{
-to{transform:translateY(110vh) scale(1.2);opacity:0}
 }
 
 </style>
@@ -181,7 +172,7 @@ to{transform:translateY(110vh) scale(1.2);opacity:0}
 
 <!-- LOGIN -->
 <div class="box" id="login">
-<h2 class="romantico">Bienvenida</h2>
+<div class="romantico">Bienvenida</div>
 <div class="romantico">Cielo 💖</div>
 <p>La clave está en nuestro día mágico</p>
 <input type="password" id="pass">
@@ -191,11 +182,11 @@ to{transform:translateY(110vh) scale(1.2);opacity:0}
 
 <!-- TITULO -->
 <div class="box hidden" id="tituloBox">
-<div class="titulo">Mi Cielo 💗</div>
+<div class="titulo">Mi Cielo 💘</div>
 </div>
 
-<!-- CORAZON -->
-<div class="hidden" id="corazon">❤️</div>
+<!-- CORAZON CENTRAL -->
+<div class="hidden" id="corazonGrande">❤️</div>
 
 <!-- PREGUNTA -->
 <div class="box hidden" id="pregunta">
@@ -248,6 +239,7 @@ function checkPass(){
 if(pass.value==="031225"){
 login.classList.add("hidden");
 tituloBox.classList.remove("hidden");
+lluviaCorazones();
 mostrarMensajes();
 }else alert("Clave incorrecta 😢");
 }
@@ -267,10 +259,10 @@ setTimeout(aparecer,1400);
 }else{
 setTimeout(()=>{
 tituloBox.classList.add("hidden");
-corazon.classList.remove("hidden");
+corazonGrande.classList.remove("hidden");
 
 setTimeout(()=>{
-corazon.classList.add("hidden");
+corazonGrande.classList.add("hidden");
 pregunta.classList.remove("hidden");
 },3000);
 
@@ -287,6 +279,7 @@ no.style.top=Math.random()*200+"px";
 function acepto(){
 pregunta.classList.add("hidden");
 respuesta.classList.remove("hidden");
+detenerCorazones();
 lluviaRosas();
 }
 
@@ -294,13 +287,31 @@ function mostrarCarta(){
 document.querySelectorAll(".msg").forEach(e=>e.remove());
 respuesta.classList.add("hidden");
 carta.classList.remove("hidden");
-lluviaCorazones();
 }
 
+/* corazones inicio */
+function lluviaCorazones(){
+window.intervalCorazones=setInterval(()=>{
+const c=document.createElement("div");
+c.className="corazon";
+c.innerHTML="💖";
+c.style.left=Math.random()*100+"vw";
+c.style.animationDuration=(3+Math.random()*5)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),8000);
+},300);
+}
+
+function detenerCorazones(){
+clearInterval(window.intervalCorazones);
+document.querySelectorAll(".corazon").forEach(e=>e.remove());
+}
+
+/* rosas despues del si */
 function lluviaRosas(){
 setInterval(()=>{
 const rosa=document.createElement("div");
-rosa.classList.add("rosa");
+rosa.className="rosa";
 rosa.innerHTML="🌹";
 rosa.style.left=Math.random()*100+"vw";
 rosa.style.animationDuration=(3+Math.random()*5)+"s";
@@ -308,21 +319,6 @@ document.body.appendChild(rosa);
 setTimeout(()=>rosa.remove(),8000);
 },300);
 }
-
-function lluviaCorazones(){
-setInterval(()=>{
-const h=document.createElement("div");
-h.className="corazonLluvia";
-h.innerHTML="💖";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(4+Math.random()*4)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),8000);
-},300);
-}
-
-/* corazones desde el inicio */
-lluviaCorazones();
 
 </script>
 </body>
