@@ -17,7 +17,6 @@ color:white;
 text-align:center;
 }
 
-/* capa oscura para contraste */
 body::before{
 content:"";
 position:fixed;
@@ -35,14 +34,14 @@ background:rgba(0,0,0,.65);
 padding:45px;
 border-radius:25px;
 box-shadow:0 0 60px rgba(255,0,120,.7);
-width:420px;
+width:440px;
 backdrop-filter:blur(6px);
 }
 
-.cielo{
+.titulo{
 font-family:'Great Vibes',cursive;
-font-size:48px;
-color:#ffb3e6;
+font-size:52px;
+color:#ffc2ec;
 text-shadow:0 0 20px #ff66cc;
 }
 
@@ -72,22 +71,17 @@ position:absolute;
 /* mensajes alrededor */
 .msg{
 position:absolute;
-font-size:20px;
 font-family:'Great Vibes',cursive;
+font-size:26px;
 color:#ffd6f2;
 text-shadow:0 0 10px black;
-animation:fade 2s forwards;
 opacity:0;
+animation:aparecer 1.5s forwards;
 }
-@keyframes fade{to{opacity:1}}
 
-/* lluvia corazones */
-.heart{
-position:absolute;
-animation:fall linear forwards;
-}
-@keyframes fall{
-to{transform:translateY(100vh);opacity:0}
+@keyframes aparecer{
+from{transform:scale(.5);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 
 /* carta */
@@ -104,11 +98,11 @@ width:460px;
 box-shadow:0 0 40px pink;
 font-family:'Great Vibes',cursive;
 font-size:26px;
-animation:aparecer 2s;
+animation:fade 2s;
 }
-@keyframes aparecer{
-from{opacity:0; transform:translate(-50%,-70%)}
-to{opacity:1; transform:translate(-50%,-50%)}
+@keyframes fade{
+from{opacity:0}
+to{opacity:1}
 }
 
 </style>
@@ -117,31 +111,32 @@ to{opacity:1; transform:translate(-50%,-50%)}
 
 <!-- LOGIN -->
 <div class="box" id="login">
-<h2>Bienvenida</h2>
-<div class="cielo">Mi Amor 💖</div>
+<h2>Bienvenida Cielo 💖</h2>
 <p>La clave está en nuestro día mágico</p>
 <input type="password" id="pass">
 <br><br>
 <button onclick="checkPass()">Entrar</button>
 </div>
 
+<!-- TITULO -->
+<div class="box hidden" id="tituloBox">
+<div class="titulo">MI MUNDO ERES TÚ</div>
+</div>
+
 <!-- PREGUNTA -->
 <div class="box hidden" id="pregunta">
-<h1 style="color:#ffc2ec;font-family:'Great Vibes',cursive;font-size:48px">
+<h1 style="font-family:'Great Vibes',cursive;font-size:50px;color:#ffd1f0">
 ¿Quieres ser mi San Valentín?
 </h1>
 <button class="yes" onclick="acepto()">Sí 💖</button>
 <button class="no" id="no">No 😢</button>
 </div>
 
-<!-- RESPUESTA BONITA -->
+<!-- RESPUESTA -->
 <div class="box hidden" id="respuesta">
-<h1 style="font-family:'Great Vibes',cursive;color:#ffd1f0">
-Sabía que dirías que sí 💍
-</h1>
+<h1 class="titulo">Sabía que dirías que sí 💍</h1>
 <p>Eres mi destino favorito ✨</p>
 <p>Mi felicidad siempre tendrá tu nombre 💖</p>
-
 <button onclick="mostrarCarta()">Para ti amor 💌</button>
 </div>
 
@@ -162,55 +157,62 @@ Porque te amo con pasión, mi cielo ❤️
 const mensajes=[
 "Eres mi casualidad favorita 💕",
 "Tu sonrisa ilumina mi mundo ✨",
-"Siempre te elegiría a ti 💖",
-"Mi lugar favorito eres tú 🌙",
-"Eres mi sueño hecho realidad 💫",
-"Contigo todo es perfecto ❤️"
+"Eres mi felicidad diaria 💖",
+"Siempre te elegiría a ti 🌙",
+"Mi lugar favorito eres tú 💫",
+"Eres mi sueño hecho realidad ❤️",
+"Contigo todo tiene sentido 🥰",
+"Eres lo mejor que me pasó 💘"
+];
+
+const posiciones=[
+["10%","20%"],
+["80%","15%"],
+["15%","70%"],
+["75%","75%"],
+["5%","45%"],
+["90%","50%"],
+["35%","10%"],
+["60%","85%"]
 ];
 
 function checkPass(){
 if(pass.value==="031225"){
 login.classList.add("hidden");
-mostrarPregunta();
-}else alert("Clave incorrecta 😢, vuelve a intentarlo mi amor :)");
+tituloBox.classList.remove("hidden");
+mostrarMensajes();
+}else alert("Clave incorrecta 😢");
 }
 
-function mostrarPregunta(){
-pregunta.classList.remove("hidden");
-
-mensajes.forEach(text=>{
+function mostrarMensajes(){
+let i=0;
+function aparecer(){
+if(i<mensajes.length){
 let m=document.createElement("div");
 m.className="msg";
-m.innerHTML=text;
-m.style.left=Math.random()*90+"vw";
-m.style.top=Math.random()*90+"vh";
+m.innerHTML=mensajes[i];
+m.style.left=posiciones[i][0];
+m.style.top=posiciones[i][1];
 document.body.appendChild(m);
-});
+i++;
+setTimeout(aparecer,1200);
+}else{
+setTimeout(()=>{
+tituloBox.classList.add("hidden");
+pregunta.classList.remove("hidden");
+},2000);
+}}
+aparecer();
 }
 
-/* boton no huye */
 no.addEventListener("mouseover",()=>{
 no.style.left=Math.random()*300+"px";
 no.style.top=Math.random()*200+"px";
 });
 
-/* aceptar */
 function acepto(){
 pregunta.classList.add("hidden");
 respuesta.classList.remove("hidden");
-lluvia();
-}
-
-function lluvia(){
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="💖";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(3+Math.random()*2)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),5000);
-},250);
 }
 
 function mostrarCarta(){
