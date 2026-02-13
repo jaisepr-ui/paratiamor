@@ -57,7 +57,7 @@ font-size:18px;
 cursor:pointer;
 transition:.3s;
 }
-button:hover{ transform:scale(1.08); }
+button:hover{transform:scale(1.08)}
 
 .yes{
 background:linear-gradient(45deg,#ff4da6,#ff9de2);
@@ -88,11 +88,11 @@ from{transform:scale(.5);opacity:0}
 to{transform:scale(1);opacity:1}
 }
 
-/* corazon */
+/* corazones lluvia */
 .corazon{
 position:fixed;
 top:-20px;
-font-size:26px;
+font-size:24px;
 animation:caer linear forwards;
 pointer-events:none;
 }
@@ -123,7 +123,7 @@ position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-width:500px;
+width:520px;
 padding:60px;
 background:
 linear-gradient(rgba(255,240,246,.92),rgba(255,240,246,.92)),
@@ -138,8 +138,8 @@ line-height:1.6;
 animation:entradaCarta 2s ease;
 }
 @keyframes entradaCarta{
-0%{opacity:0;transform:translate(-50%,-40%) scale(.8);}
-100%{opacity:1;transform:translate(-50%,-50%) scale(1);}
+0%{opacity:0;transform:translate(-50%,-40%) scale(.8)}
+100%{opacity:1;transform:translate(-50%,-50%) scale(1)}
 }
 
 /* rosas */
@@ -159,7 +159,7 @@ pointer-events:none;
 <div class="box" id="login">
 <h2 style="font-family:Great Vibes;font-size:55px;color:#ffd6f2">Bienvenida</h2>
 <div style="font-family:Great Vibes;font-size:55px;color:#ffd6f2">Cielo 💖</div>
-<p>La clave está en nuestro día mágico ✨</p>
+<p>La clave está en nuestro día mágico</p>
 <input type="password" id="pass">
 <br><br>
 <button onclick="checkPass()">Entrar</button>
@@ -184,6 +184,7 @@ pointer-events:none;
 <!-- RESPUESTA -->
 <div class="box hidden" id="respuesta">
 <h1 class="titulo">Sabía que aceptarías 💍</h1>
+<p>Eres mi destino favorito ✨</p>
 <p>Mi felicidad siempre tendrá tu nombre 💖</p>
 <button onclick="mostrarCarta()">Para ti amor 💌</button>
 </div>
@@ -225,7 +226,7 @@ const posiciones=[
 ["5%","45%"],["90%","50%"],["35%","10%"],["60%","85%"]
 ];
 
-/* lluvia corazones inicio */
+/* corazones inicio */
 window.lluviaCorazonesInterval=setInterval(()=>{
 const c=document.createElement("div");
 c.className="corazon";
@@ -246,9 +247,10 @@ if(pass.value==="031225"){
 login.classList.add("hidden");
 tituloBox.classList.remove("hidden");
 mostrarMensajes();
-}else alert("Clave incorrecta 😢, vuelve a intentarlo :)");
+}else alert("Clave incorrecta 😢");
 }
 
+/* MENSAJES */
 function mostrarMensajes(){
 let i=0;
 function aparecer(){
@@ -265,12 +267,10 @@ setTimeout(aparecer,1400);
 setTimeout(()=>{
 tituloBox.classList.add("hidden");
 corazonGrande.classList.remove("hidden");
-
 setTimeout(()=>{
 corazonGrande.classList.add("hidden");
 pregunta.classList.remove("hidden");
 },3000);
-
 },2000);
 }}
 aparecer();
@@ -281,19 +281,20 @@ no.style.left=Math.random()*300+"px";
 no.style.top=Math.random()*200+"px";
 });
 
+/* aceptar */
 function acepto(){
 pregunta.classList.add("hidden");
 detenerCorazones();
 mostrarFlashRomantico();
 }
 
-/* FLASH DE FOTOS */
+/* FLASH FOTOS */
 function mostrarFlashRomantico(){
 
 const cont=document.createElement("div");
 cont.style.position="fixed";
 cont.style.inset="0";
-cont.style.background="rgba(0,0,0,.85)";
+cont.style.background="rgba(0,0,0,.93)";
 cont.style.zIndex="9999";
 document.body.appendChild(cont);
 
@@ -306,29 +307,44 @@ if(i<fotos.length){
 const img=document.createElement("img");
 img.src=fotos[i];
 img.style.position="absolute";
-img.style.maxWidth="320px";
-img.style.borderRadius="20px";
-img.style.boxShadow="0 0 40px hotpink";
-img.style.left=Math.random()*70+10+"%";
-img.style.top=Math.random()*70+10+"%";
+img.style.width="450px";
+img.style.maxWidth="85vw";
+img.style.borderRadius="25px";
+img.style.boxShadow="0 0 70px hotpink";
+img.style.left=Math.random()*60+20+"%";
+img.style.top=Math.random()*60+20+"%";
 img.style.opacity="0";
-img.style.transition="1s";
+img.style.transform="scale(.6)";
+img.style.transition="all 1s ease";
+
 cont.appendChild(img);
 
-setTimeout(()=>img.style.opacity="1",100);
-setTimeout(()=>{img.style.opacity="0";setTimeout(()=>img.remove(),1000)},1500);
+setTimeout(()=>{
+img.style.opacity="1";
+img.style.transform="scale(1)";
+},100);
+
+setTimeout(()=>{
+img.style.opacity="0";
+img.style.transform="scale(.5)";
+setTimeout(()=>img.remove(),1000);
+},2000);
 
 i++;
-setTimeout(flash,600);
+setTimeout(flash,900);
 
 }else{
 
 const texto=document.createElement("div");
 texto.innerHTML="ERES HERMOSA 💖";
+texto.style.position="absolute";
+texto.style.top="50%";
+texto.style.left="50%";
+texto.style.transform="translate(-50%,-50%)";
 texto.style.fontFamily="Great Vibes";
-texto.style.fontSize="90px";
+texto.style.fontSize="95px";
 texto.style.color="#ffd6f2";
-texto.style.textShadow="0 0 40px hotpink";
+texto.style.textShadow="0 0 70px hotpink";
 cont.appendChild(texto);
 
 setTimeout(()=>{
@@ -341,7 +357,7 @@ lluviaRosas();
 flash();
 }
 
-/* rosas finales */
+/* rosas */
 function lluviaRosas(){
 setInterval(()=>{
 const rosa=document.createElement("div");
@@ -354,7 +370,9 @@ setTimeout(()=>rosa.remove(),8000);
 },300);
 }
 
+/* carta */
 function mostrarCarta(){
+document.querySelectorAll(".msg").forEach(e=>e.remove());
 respuesta.classList.add("hidden");
 carta.classList.remove("hidden");
 }
@@ -362,3 +380,4 @@ carta.classList.remove("hidden");
 </script>
 </body>
 </html>
+
