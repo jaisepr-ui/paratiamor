@@ -92,7 +92,7 @@ to{transform:scale(1);opacity:1}
 .corazon{
 position:fixed;
 top:-20px;
-font-size:24px;
+font-size:26px;
 animation:caer linear forwards;
 pointer-events:none;
 }
@@ -159,7 +159,7 @@ pointer-events:none;
 <div class="box" id="login">
 <h2 style="font-family:Great Vibes;font-size:55px;color:#ffd6f2">Bienvenida</h2>
 <div style="font-family:Great Vibes;font-size:55px;color:#ffd6f2">Cielo 💖</div>
-<p>La clave está en nuestro día mágico</p>
+<p>La clave está en nuestro día mágico ✨</p>
 <input type="password" id="pass">
 <br><br>
 <button onclick="checkPass()">Entrar</button>
@@ -184,7 +184,6 @@ pointer-events:none;
 <!-- RESPUESTA -->
 <div class="box hidden" id="respuesta">
 <h1 class="titulo">Sabía que aceptarías 💍</h1>
-<p>Eres mi destino favorito ✨</p>
 <p>Mi felicidad siempre tendrá tu nombre 💖</p>
 <button onclick="mostrarCarta()">Para ti amor 💌</button>
 </div>
@@ -201,13 +200,13 @@ Porque te amo con pasión, mi cielo ❤️
 <script>
 
 const fotos=[
-"foto1.jpg",
-"foto2.jpg",
-"foto3.jpg",
-"foto4.jpg",
-"foto5.jpg",
-"foto6.jpg",
-"foto7.jpg"
+"foto1.jpeg",
+"foto2.jpeg",
+"foto3.jpeg",
+"foto4.jpeg",
+"foto5.jpeg",
+"foto6.jpeg",
+"foto7.jpeg"
 ];
 
 const mensajes=[
@@ -247,7 +246,7 @@ if(pass.value==="031225"){
 login.classList.add("hidden");
 tituloBox.classList.remove("hidden");
 mostrarMensajes();
-}else alert("Clave incorrecta 😢");
+}else alert("Clave incorrecta 😢, vuelve a intentarlo :)");
 }
 
 function mostrarMensajes(){
