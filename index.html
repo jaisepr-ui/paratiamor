@@ -2,141 +2,222 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title> Mi Mmundo Eres Tú 💖</title>
+<title>Para ti mi princesa 💖</title>
+
 <style>
 body{
 margin:0;
 overflow:hidden;
 font-family:'Segoe UI', cursive;
-background:linear-gradient(270deg,#ff9a9e,#fad0c4,#fad0c4,#ff9a9e);
-background-size:800% 800%;
-animation:bg 15s ease infinite;
-color: sky blue;
+background:radial-gradient(circle at top,#1a0026,#000000 80%);
+color:white;
 text-align:center;
 }
-@keyframes bg{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+animation:twinkle 2s infinite alternate;
 }
+@keyframes twinkle{
+from{opacity:.2}
+to{opacity:1}
+}
+
 .box{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:rgba(255,255,255,0.15);
-padding:40px;
-border-radius:25px;
-backdrop-filter:blur(10px);
-box-shadow:0 0 40px rgba(0,0,0,0.3);
-width:350px;
+background:rgba(0,0,0,0.75);
+padding:45px;
+border-radius:30px;
+box-shadow:0 0 60px #ff4da6;
+width:400px;
+animation:fadeIn 2s;
 }
-input{
-padding:12px;
-border:none;
-border-radius:15px;
-text-align:center;
-font-size:16px;
-margin-top:15px;
+
+@keyframes fadeIn{
+from{opacity:0; transform:translate(-50%,-60%)}
+to{opacity:1; transform:translate(-50%,-50%)}
 }
+
+.cielo{
+font-size:42px;
+color:#ff77c6;
+text-shadow:0 0 25px #ff77c6;
+animation:pulse 2s infinite;
+}
+@keyframes pulse{
+50%{transform:scale(1.1)}
+}
+
 button{
-padding:12px 25px;
+padding:13px 30px;
 border:none;
 border-radius:30px;
-margin:10px;
-font-size:17px;
+margin:12px;
+font-size:18px;
 cursor:pointer;
-transition:.2s;
+transition:.3s;
 }
-.yes{background:#00e676;color:white;}
-.no{background:#ff1744;color:white;position:absolute;}
-.hidden{display:none;}
+
+.yes{
+background:linear-gradient(45deg,#ff4da6,#ff9de2);
+color:white;
+box-shadow:0 0 20px #ff4da6;
+}
+
+.no{
+background:#ff1744;
+color:white;
+position:absolute;
+}
+
+.hidden{display:none}
+
+/* lluvia corazones */
 .heart{
 position:absolute;
-font-size:20px;
-animation:float 6s linear infinite;
+font-size:22px;
+animation:fall linear forwards;
+}
+@keyframes fall{
+to{transform:translateY(100vh); opacity:0;}
+}
+
+/* flores */
+.flower{
+position:absolute;
+font-size:26px;
+animation:float 6s linear forwards;
 }
 @keyframes float{
-0%{transform:translateY(100vh) scale(0);}
-100%{transform:translateY(-10vh) scale(1.5);}
+from{transform:translateY(100vh)}
+to{transform:translateY(-10vh); opacity:0}
 }
 </style>
 </head>
 <body>
 
+<script>
+for(let i=0;i<120;i++){
+let s=document.createElement("div");
+s.className="star";
+s.style.top=Math.random()*100+"vh";
+s.style.left=Math.random()*100+"vw";
+document.body.appendChild(s);
+}
+</script>
+
 <audio autoplay loop>
 <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3">
 </audio>
 
+<!-- LOGIN -->
 <div class="box" id="login">
-<h2>💖 Bienvenida Amor 💖</h2>
-<p>La clave está en nuestro día mágico ✨</p>
+<h2>✨ Bienvenida ✨</h2>
+<div class="cielo">mi amorcito 💖</div>
+<p>La clave está en nuestro día mágico</p>
 <input type="password" id="pass" placeholder="Ingresa la clave">
 <br>
 <button onclick="checkPass()">Entrar</button>
 </div>
+  
+<div class="box hidden" id="mensajes"></div>
 
-<div class="box hidden" id="contenido">
-<h2 id="texto"></h2>
-<div id="mensajes" class="hidden">
-<p>Eres mi destino 💘</p>
-<p>Mi lugar seguro siempre serás tú 🥰</p>
-<p>Tu sonrisa es mi debilidad 😍</p>
-<p>Si la vida es sueño… quiero soñarte siempre ❤️</p>
+<!-- PREGUNTA -->
+<div class="box hidden" id="pregunta">
+<h2 style="font-size:28px;">Cielo… 💫</h2>
+<h1 style="color:#ff9de2;text-shadow:0 0 20px #ff4da6">
+¿Quieres ser mi San Valentín? 🌹
+</h1>
+<button class="yes" onclick="acepto()">Sí mi amor 💖</button>
+<button class="no" id="no">No 😢</button>
+</div>
 
-<h3>¿Quieres ser mi San Valentín? 💌</h3>
-<button class="yes" onclick="acepto()">Sí 💖</button>
-<button class="no" id="no">No 💔</button>
-</div>
-</div>
 
 <div class="box hidden" id="final">
-<h2>🥹 Sabía que dirías que sí</h2>
-<p>Prometo cuidarte, amarte y hacerte sonreír todos los días 💞</p>
-<p>Eres mi persona favorita en todo el universo 🌎❤️</p>
+<h1 style="color:#ff9de2">Sabía que dirías que sí 💍</h1>
+<p>Eres el amor más hermoso que existe Cielo ✨</p>
+<p>Hoy confirmo que eres mi destino ❤️</p>
 </div>
 
 <script>
+const textos=[
+"Eres lo más bonito que me ha pasado 💕",
+"Mi lugar favorito siempre será contigo 🌙",
+"Tu sonrisa ilumina mi mundo ✨",
+"No quiero una vida perfecta… solo una contigo 💖",
+"Desde que llegaste todo es más hermoso 🥰",
+"Si existieran mil universos… te elegiría en todos 💫"
+];
+
 function checkPass(){
-let p=document.getElementById("pass").value;
-if(p==="031225"){
-document.getElementById("login").classList.add("hidden");
-document.getElementById("contenido").classList.remove("hidden");
-escribirTexto("Desbloqueando mensajes secretos...");
-setTimeout(()=>document.getElementById("mensajes").classList.remove("hidden"),2500);
-}else{
-alert("Clave incorrecta amorcito 😢, vuelve a intentarlo :)");
+if(pass.value==="031225"){
+login.classList.add("hidden");
+mostrarMensajes();
+}else alert("Clave incorrecta 😢");
 }
-}
-function escribirTexto(text){
+
+function mostrarMensajes(){
+mensajes.classList.remove("hidden");
 let i=0;
-function type(){
-if(i<text.length){
-document.getElementById("texto").innerHTML+=text.charAt(i);
+function next(){
+if(i<textos.length){
+let p=document.createElement("p");
+p.innerHTML=textos[i];
+p.style.opacity=0;
+p.style.transition="2s";
+mensajes.appendChild(p);
+setTimeout(()=>p.style.opacity=1,100);
 i++;
-setTimeout(type,50);
+setTimeout(next,2200);
+}else{
+setTimeout(()=>{
+mensajes.classList.add("hidden");
+pregunta.classList.remove("hidden");
+lluviaRomantica();
+},2500);
 }}
-type();
+next();
 }
-const noBtn=document.getElementById("no");
-noBtn.addEventListener("mouseover",()=>{
-const x=Math.random()*window.innerWidth*0.8;
-const y=Math.random()*window.innerHeight*0.8;
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
+
+
+no.addEventListener("mouseover",()=>{
+no.style.left=Math.random()*300+"px";
+no.style.top=Math.random()*200+"px";
 });
-function acepto(){
-document.getElementById("contenido").classList.add("hidden");
-document.getElementById("final").classList.remove("hidden");
-}
+
+
+function lluviaRomantica(){
 setInterval(()=>{
-let heart=document.createElement("div");
-heart.className="heart";
-heart.style.left=Math.random()*100+"vw";
-heart.innerHTML="💖";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),6000);
-},300);
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="💖";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(3+Math.random()*2)+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},200);
+
+setInterval(()=>{
+let f=document.createElement("div");
+f.className="flower";
+f.innerHTML="🌸";
+f.style.left=Math.random()*100+"vw";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),6000);
+},600);
+}
+
+function acepto(){
+pregunta.classList.add("hidden");
+final.classList.remove("hidden");
+}
 </script>
 
 </body>
